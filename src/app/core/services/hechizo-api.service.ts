@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Hechizo } from '../../models/hechizo.model';
+import { HttpParams } from '@angular/common/http';
 
 // Servicio de acceso a /api/hechizos (los endpoints del Reto 4 del backend).
 // 👀 Usa MagoApiService (mago-api.service.ts) como ejemplo: está resuelto y comentado.
@@ -16,7 +17,8 @@ export class HechizoApiService {
   // PISTA: crea new HttpParams().set('tipo', tipo) y pásalo en las opciones del get: { params }.
   buscarPorTipo(tipo: string): Observable<Hechizo[]> {
     // Escribe tu código aquí y borra la línea de abajo:
-    return of([]);
+    const params = new HttpParams().set('tipo', tipo);
+    return this.http.get<Hechizo[]>(this.url, { params });
   }
 
   // ✍️ RETO 3: El Escriba del Grimorio
