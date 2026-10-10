@@ -1,0 +1,42 @@
+name: El Tribunal Mágico (Validación de Hechizos Frontend)
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+# Necesitamos permisos de escritura para que el bot pueda crear Issues
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  evaluar-magia:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Leer pergaminos (Checkout)
+      uses: actions/checkout@v4
+
+    - name: Preparar varitas (Set up Node 22)
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+        cache: npm
+
+    - name: Reunir ingredientes (npm ci)
+      run: npm ci
+
+    - name: Invocar pruebas mágicas (Evaluar cada reto)
+      # El script evalúa cada reto por separado y NUNCA falla el workflow,
+      # para poder leer los reportes y comentarle al estudiante.
+      run: npm run retos
+
+    - name: El Veredicto del Tribunal (Issue Manager)
+      uses: actions/github-script@v7
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const script = require('./.github/scripts/tribunal.js')
+          await script({github, context})

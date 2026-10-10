@@ -1,0 +1,24 @@
+<div class="fila entre">
+  <div>
+    <h1>Magos</h1>
+    <p class="subtitulo">GET /api/magos</p>
+  </div>
+  <a class="btn" routerLink="/magos/nuevo">+ Nuevo mago</a>
+</div>
+
+<app-alerta [mensaje]="exito()" tipo="ok" />
+<app-alerta [mensaje]="error()" tipo="error" />
+
+<!-- Control de flujo: @if / @for (equivalen a if y for de Java, pero en el HTML) -->
+@if (cargando()) {
+  <p class="vacio">Consultando el registro del colegio…</p>
+} @else {
+  <div class="grilla">
+    @for (mago of magos(); track mago.id) {
+      <!-- [mago] envía datos al hijo; (eliminar) escucha el evento del hijo -->
+      <app-mago-card [mago]="mago" (eliminar)="eliminar($event)" />
+    } @empty {
+      <p class="vacio">Aún no hay magos. ¡Registra el primero!</p>
+    }
+  </div>
+}

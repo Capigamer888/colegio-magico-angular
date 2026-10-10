@@ -1,0 +1,32 @@
+<p><a routerLink="/magos">← Volver</a></p>
+<h1>{{ esEdicion ? 'Editar mago' : 'Nuevo mago' }}</h1>
+<p class="subtitulo">{{ esEdicion ? 'PUT /api/magos/' + id() : 'POST /api/magos' }}</p>
+
+<app-alerta [mensaje]="error()" tipo="error" />
+
+<!-- [formGroup] conecta el <form> con el objeto "form" del .ts -->
+<form [formGroup]="form" (ngSubmit)="guardar()" class="tarjeta">
+  <label>
+    Nombre
+    <input formControlName="nombre" placeholder="Ej: Hermione Granger" />
+    @if (form.controls.nombre.touched && form.controls.nombre.invalid) {
+      <span class="ayuda-error">El nombre es obligatorio (mínimo 2 letras).</span>
+    }
+  </label>
+
+  <label>
+    Casa
+    <select formControlName="casa">
+      @for (casa of casas; track casa) {
+        <option [value]="casa">{{ casa }}</option>
+      }
+    </select>
+  </label>
+
+  <div class="fila">
+    <button class="btn" type="submit" [disabled]="guardando()">
+      {{ guardando() ? 'Guardando…' : 'Guardar' }}
+    </button>
+    <a class="btn secundario" routerLink="/magos">Cancelar</a>
+  </div>
+</form>

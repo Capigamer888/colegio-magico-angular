@@ -1,0 +1,37 @@
+<p><a routerLink="/hechizos">← Volver</a></p>
+<h1>Nuevo hechizo</h1>
+<p class="subtitulo">POST /api/hechizos</p>
+
+<app-alerta [mensaje]="error()" tipo="error" />
+
+<form [formGroup]="form" (ngSubmit)="guardar()" class="tarjeta">
+  <label>
+    Nombre
+    <input formControlName="nombre" placeholder="Ej: Expelliarmus" />
+    @if (form.controls.nombre.touched && form.controls.nombre.invalid) {
+      <span class="ayuda-error">El nombre es obligatorio.</span>
+    }
+  </label>
+
+  <label>
+    Tipo de magia
+    <select formControlName="tipoMagia">
+      @for (t of tipos; track t) {
+        <option [value]="t">{{ t }}</option>
+      }
+    </select>
+  </label>
+
+  <label>
+    Nivel de poder (1–100)
+    <input type="number" formControlName="nivelPoder" />
+    @if (form.controls.nivelPoder.touched && form.controls.nivelPoder.invalid) {
+      <span class="ayuda-error">Debe estar entre 1 y 100.</span>
+    }
+  </label>
+
+  <div class="fila">
+    <button class="btn" type="submit">Registrar</button>
+    <a class="btn secundario" routerLink="/hechizos">Cancelar</a>
+  </div>
+</form>

@@ -1,0 +1,11 @@
+<p><a routerLink="/magos">← Volver</a></p>
+<app-alerta [mensaje]="error()" tipo="error" />
+
+@if (mago(); as m) {
+  <div class="tarjeta">
+    <p class="subtitulo">GET /api/magos/{{ m.id }}</p>
+    <h1>{{ m.nombre }}</h1>
+    <p>Casa: <strong>{{ m.casa || 'Sin casa' }}</strong></p>
+    <a class="btn" [routerLink]="['/magos', m.id, 'editar']">Editar</a>
+  </div>
+}

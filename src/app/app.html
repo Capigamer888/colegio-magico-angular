@@ -1,0 +1,12 @@
+<header class="barra">
+  <a routerLink="/" class="marca">🏰 Colegio Mágico</a>
+  <nav>
+    <a routerLink="/magos" routerLinkActive="activo">Magos</a>
+    <a routerLink="/hechizos" routerLinkActive="activo">Grimorio</a>
+  </nav>
+</header>
+
+<main class="contenido">
+  <!-- Aquí el Router "pinta" el componente que corresponde a la URL actual -->
+  <router-outlet />
+</main>
